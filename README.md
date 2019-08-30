@@ -1,8 +1,10 @@
 # discord bot template
 A starter template for easily creating discord bots
 
-`git clone git@github.com:KurozeroPB/discord-bot-template.git`
+1. `git clone git@github.com:KurozeroPB/discord-bot-template.git`
 
-`yarn install` or `npm i`
+2. change the settings in `settings.ts.example` and remove the `.example`
 
-`yarn test` or `npm run test`
+3. `yarn install` or `npm i`
+
+4. `yarn test` or `npm run test`

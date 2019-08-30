@@ -1,8 +1,8 @@
 import { ISettings } from "./src/interfaces/ISettings";
 
 const settings: ISettings = {
-    token: "",
-    owner: "",
+    token: "<token>",
+    owner: "<owner-id>",
     prefix: "!"
 };
 
