@@ -1,0 +1,9 @@
+import { ISettings } from "./src/interfaces/ISettings";
+
+const settings: ISettings = {
+    token: "",
+    owner: "",
+    prefix: "!"
+};
+
+export default settings;
