@@ -28,6 +28,8 @@
         "test": "yarn dev",
         "dev": "cross-env NODE_ENV=development nodemon --watch '**/*.ts' --ignore '**/*.spec.ts' --exec 'ts-node' -r tsconfig-paths/register src/index.ts",
         "prebuild": "rm -rf dist",
+        "pretest": "yarn lint",
+        "prestart": "yarn lint",
         "build": "tsc",
         "deps": "depcheck",
         "format": "prettier --write \"src/**/*.{ts,js}\" \"./*.{ts,js}\"",
