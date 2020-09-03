@@ -1,4 +1,4 @@
-import Command from "../../Command";
+import Command from "~/utils/Command";
 import { Message } from "eris";
 
 export default class Ping extends Command {

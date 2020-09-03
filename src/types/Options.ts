@@ -1,16 +1,14 @@
-import Client from "../structures/Client";
-import Logger from "../utils/Logger";
-import { ISettings } from "./ISettings";
-import { User } from "eris";
+import Client from "~/utils/Client";
+import Logger from "~/utils/Logger";
 import Collection from "@kurozero/collection";
+import { User } from "eris";
 
-export interface ICommandHandlerOptions {
-    settings: ISettings;
+export interface CommandHandlerOptions {
     client: Client;
     logger: Logger;
 }
 
-export interface ICommandOptions {
+export interface CommandOptions {
     name: string;
     description: string;
     usage: string;
@@ -26,7 +24,7 @@ export interface ICommandOptions {
     botPermissions?: string[] | null;
 }
 
-export interface ICommandStats {
+export interface CommandStats {
     commandsExecuted: number;
     messagesSeen: number;
     commandUsage: {

@@ -7,8 +7,16 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "rootDir": ".",
-        "outDir": "build",
-        "typeRoots": ["./node_modules/@types", "./src/@types"]
+        "outDir": "dist",
+        "typeRoots": [
+            "./node_modules/@types",
+            "./@types"
+        ],
+        "paths": {
+            "*": ["node_modules/*"],
+            "~/*": ["src/*"],
+            "@/*": ["*"]
+        }
     },
     "include": [
         "src/**/*"

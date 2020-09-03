@@ -1,27 +1,24 @@
-import Client from "./Client";
-import Logger from "../utils/Logger";
-import { ISettings } from "../interfaces/ISettings";
-import { ICommandHandlerOptions } from "../interfaces/Options";
-import { isGuildChannel } from "../utils/Helpers";
-import { Message, AnyGuildChannel, User } from "eris";
+import settings from "~/settings";
+import Client from "~/utils/Client";
+import Logger from "~/utils/Logger";
+import { Message, User } from "eris";
 import { Collection } from "@kurozero/collection";
+import { isGuildChannel } from "./Utils";
 
 export default class CommandHandler {
-    public settings: ISettings;
-    public client: Client;
-    public logger: Logger;
+    client: Client;
+    logger: Logger;
 
-    public constructor(options: ICommandHandlerOptions) {
-        this.settings = options.settings;
-        this.client = options.client;
-        this.logger = options.logger;
+    constructor(client: Client) {
+        this.client = client;
+        this.logger = client.logger;
     }
 
-    public async handleCommand(msg: Message, dm: boolean): Promise<boolean | undefined> {
+    async handleCommand(msg: Message, dm: boolean): Promise<boolean | undefined> {
         const parts = msg.content.split(" ");
-        const name = parts[0].slice(this.settings.prefix.length);
+        const name = parts[0].slice(settings.prefix.length);
 
-        const command = this.client.commands.find((cmd) => cmd.name === name || cmd.aliases.indexOf(name) !== -1);
+        const command = this.client.commands.find((cmd) => cmd.name === name || cmd.aliases.indexOf(name) !== -1)?.value;
         if (!command) return false; // Command doesn't exist
 
         this.client.stats.commandsExecuted++;
@@ -31,7 +28,8 @@ export default class CommandHandler {
 
         const args = parts.splice(1);
         const context = {
-            settings: this.settings,
+            client: this.client,
+            settings: settings,
             logger: this.logger
         };
 
@@ -46,13 +44,13 @@ export default class CommandHandler {
         // Check command args count
         if (command.requiredArgs > args.length) {
             try {
-                await msg.channel.createMessage(`Invalid argument count, check \`${this.settings.prefix}help ${command.name}\` to see how this command works.`);
+                await msg.channel.createMessage(`Invalid argument count, check \`${settings.prefix}help ${command.name}\` to see how this command works.`);
             } catch (e) {}
             return false;
         }
 
         // Check if command is owner only
-        if (command.ownerOnly && msg.author.id !== this.settings.owner) {
+        if (command.ownerOnly && msg.author.id !== settings.owner) {
             try {
                 await msg.channel.createMessage("Only the owner can execute this command.");
             } catch (e) {}
@@ -61,12 +59,11 @@ export default class CommandHandler {
 
         // Only check for permission if the command is used in a guild
         if (isGuildChannel(msg.channel)) {
-            const channel = msg.channel as AnyGuildChannel;
             const botPermissions = command.botPermissions;
             if (botPermissions.length > 0) {
-                const member = channel.guild.members.get(this.client.user.id);
+                const member = msg.channel.guild.members.get(this.client.user.id);
                 if (!member) return;
-                let missingPermissions = [];
+                const missingPermissions = [];
                 for (let i = 0; i < botPermissions.length; i++) {
                     const hasPermission = member.permission.has(botPermissions[i]);
                     if (hasPermission === false) {
@@ -84,9 +81,9 @@ export default class CommandHandler {
 
             const userPermissions = command.userPermissions;
             if (userPermissions.length > 0) {
-                const member = channel.guild.members.get(msg.author.id);
+                const member = msg.channel.guild.members.get(msg.author.id);
                 if (!member) return;
-                let missingPermissions = [];
+                const missingPermissions = [];
                 for (let i = 0; i < userPermissions.length; i++) {
                     const hasPermission = member.permission.has(userPermissions[i]);
                     if (hasPermission === false) {
@@ -102,14 +99,14 @@ export default class CommandHandler {
         }
 
         try {
-            await command.run(msg, args, this.client, context);
+            await command.run(msg, args, context);
             return true;
         } catch (error) {
             console.error(error);
             try {
                 await msg.channel.createMessage({
                     embed: {
-                        color: 0xDC143C,
+                        color: 0xdc143c,
                         description: error.toString()
                     }
                 });

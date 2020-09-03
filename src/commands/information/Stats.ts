@@ -1,7 +1,7 @@
-import Command from "../../Command";
-import Client from "../../structures/Client";
-import { version } from "../../../package.json";
-import { formatSeconds } from "../../utils/Helpers";
+import Command from "~/utils/Command";
+import CommandContext from "~/types/CommandContext";
+import { version } from "@/package.json";
+import { formatSeconds } from "~/utils/Utils";
 import { Message, GuildChannel } from "eris";
 
 export default class Stats extends Command {
@@ -16,14 +16,14 @@ export default class Stats extends Command {
         });
     }
 
-    public async run(msg: Message, _args: string[], client: Client): Promise<Message | undefined> {
+    public async run(msg: Message, _args: string[], { client }: CommandContext): Promise<Message | undefined> {
         return msg.channel.createMessage({
             embed: {
                 color: 0,
                 author: {
-                    name: "D3 Stats",
-                    url: "https://mashu.xyz",
-                    icon_url: client.user.avatarURL // eslint-disable-line @typescript-eslint/camelcase
+                    name: "Discord Bot Stats",
+                    url: "https://github.com/Pepijn98/discord-bot",
+                    icon_url: client.user.avatarURL
                 },
                 thumbnail: {
                     url: client.user.avatarURL
