@@ -10,7 +10,7 @@ export default class CommandLoader {
     client: Client;
     logger: Logger;
 
-    public constructor(client: Client) {
+    constructor(client: Client) {
         this.commands = new Collection(Command);
         this.client = client;
         this.logger = client.logger;

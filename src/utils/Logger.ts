@@ -4,10 +4,10 @@ import { Logger as WinstonLogger, createLogger, format, transports } from "winst
 
 /** Custom logger, you know, this logs stuff to the terminal with pretty colors and timestamps :O */
 export default class Logger {
-    private _log: WinstonLogger;
+    #log: WinstonLogger;
 
-    public constructor() {
-        this._log = createLogger({
+    constructor() {
+        this.#log = createLogger({
             level: "warn",
             format: format.combine(
                 format.timestamp(),
@@ -24,23 +24,23 @@ export default class Logger {
         });
     }
 
-    public ready(message: string): void {
-        this._log.info(message, { label: "READY" });
+    ready(message: string): void {
+        this.#log.info(message, { label: "READY" });
     }
 
-    public info(label: string, message: string): void {
-        this._log.info(message, { label });
+    info(label: string, message: string): void {
+        this.#log.info(message, { label });
     }
 
-    public warn(label: string, message: string): void {
-        this._log.warn(message, { label });
+    warn(label: string, message: string): void {
+        this.#log.warn(message, { label });
     }
 
-    public error(label: string, error: Error | string = "Unknown Error"): void {
+    error(label: string, error: Error | string = "Unknown Error"): void {
         if (error instanceof Error) {
-            this._log.error(error.stack ? error.stack : error.toString(), { label });
+            this.#log.error(error.stack ? error.stack : error.toString(), { label });
         } else {
-            this._log.error(error, { label });
+            this.#log.error(error, { label });
         }
     }
 

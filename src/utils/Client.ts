@@ -10,7 +10,7 @@ export class BotClient extends Client {
     stats: CommandStats;
     ready = false;
 
-    public constructor(logger: Logger, token: string, options: ClientOptions) {
+    constructor(logger: Logger, token: string, options: ClientOptions) {
         super(token, options);
 
         this.logger = logger;

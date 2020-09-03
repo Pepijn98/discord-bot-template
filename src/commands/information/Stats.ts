@@ -5,7 +5,7 @@ import { formatSeconds } from "~/utils/Utils";
 import { Message, GuildChannel } from "eris";
 
 export default class Stats extends Command {
-    public constructor(category: string) {
+    constructor(category: string) {
         super({
             name: "stats",
             description: "",
@@ -16,7 +16,7 @@ export default class Stats extends Command {
         });
     }
 
-    public async run(msg: Message, _args: string[], { client }: CommandContext): Promise<Message | undefined> {
+    async run(msg: Message, _args: string[], { client }: CommandContext): Promise<Message | undefined> {
         return msg.channel.createMessage({
             embed: {
                 color: 0,
