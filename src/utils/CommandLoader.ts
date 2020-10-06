@@ -20,9 +20,14 @@ export default class CommandLoader {
     async load(commandDir: string): Promise<Collection<Command>> {
         const dirs = await fs.readdir(commandDir);
         for (const dir of dirs) {
+            if (dir.endsWith(".disabled")) {
+                continue;
+            }
             const files = await fs.readdir(path.join(commandDir, dir));
             for (const file of files) {
-                if (/\.(j|t)s$/iu.test(file)) {
+                if (/\.disabled\.(j|t)s$/iu.test(file)) {
+                    continue;
+                } else if (/\.(j|t)s$/iu.test(file)) {
                     await this._add(path.join(commandDir, dir, file), dir);
                 }
             }
