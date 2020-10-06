@@ -1,6 +1,6 @@
 {
     "name": "discord-bot",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Discord Bot Template",
     "engines": {
         "node": ">=14",
@@ -27,6 +27,7 @@
         "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register src/index.ts",
         "test": "yarn dev",
         "dev": "cross-env NODE_ENV=development nodemon --watch '**/*.ts' --ignore '**/*.spec.ts' --exec 'ts-node' -r tsconfig-paths/register src/index.ts",
+        "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Use yarn for installing: https://yarnpkg.com/en/docs/install')\"",
         "prebuild": "rm -rf dist",
         "pretest": "yarn lint",
         "prestart": "yarn lint",
@@ -43,23 +44,23 @@
         "chalk": "^4.1.0",
         "eris": "^0.13.3",
         "erlpack": "abalabahaha/erlpack",
-        "moment": "^2.27.0",
+        "moment": "^2.29.1",
         "os-utils": "oscmejia/os-utils",
         "winston": "^3.3.3",
         "zlib-sync": "^0.1.7"
     },
     "devDependencies": {
-        "@types/node": "^14.6.3",
-        "@typescript-eslint/eslint-plugin": "^4.0.1",
-        "@typescript-eslint/parser": "^4.0.1",
+        "@types/node": "^14.11.5",
+        "@typescript-eslint/eslint-plugin": "^4.4.0",
+        "@typescript-eslint/parser": "^4.4.0",
         "cross-env": "^7.0.2",
-        "eslint": "^7.8.1",
-        "eslint-config-prettier": "^6.11.0",
+        "eslint": "^7.10.0",
+        "eslint-config-prettier": "^6.12.0",
         "gts": "^2.0.2",
         "nodemon": "^2.0.4",
-        "prettier": "^2.1.1",
+        "prettier": "^2.1.2",
         "ts-node": "^9.0.0",
         "tsconfig-paths": "^3.9.0",
-        "typescript": "^4.0.2"
+        "typescript": "^4.0.3"
     }
 }
