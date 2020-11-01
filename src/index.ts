@@ -7,14 +7,18 @@ import CommandHandler from "./utils/CommandHandler";
 import CommandLoader from "./utils/CommandLoader";
 import EventLoader from "./utils/EventLoader";
 import Logger from "./utils/Logger";
-import { isGuildChannel, isPrivateChannel } from "./utils/Utils";
+import { isGuildChannel, isPrivateChannel, intents } from "./utils/Utils";
 
-let ready = false;
 const logger = new Logger();
 
 const client = new Client(logger, settings.token, {
+    autoreconnect: true,
+    compress: true,
     getAllUsers: true,
-    restMode: true
+    restMode: true,
+    defaultImageFormat: "webp",
+    defaultImageSize: 2048,
+    intents: intents
 });
 
 const commandLoader = new CommandLoader(client);
@@ -22,13 +26,13 @@ const commandHandler = new CommandHandler(client);
 const eventLoader = new EventLoader(client);
 
 client.on("ready", async () => {
-    if (!ready) {
+    if (!client.ready) {
         client.commands = await commandLoader.load(path.join(__dirname, "commands"));
 
         logger.ready(`Logged in as ${client.user.tag}`);
         logger.ready(`Loaded [${client.commands.size}] commands`);
 
-        ready = true;
+        client.ready = true;
     }
 });
 
@@ -37,7 +41,7 @@ client.on("disconnect", () => {
 });
 
 client.on("messageCreate", async (msg) => {
-    if (!ready) return; // Bot not ready yet
+    if (!client.ready) return; // Bot not ready yet
     if (!msg.author) return; // Probably system message
     if (msg.author.discriminator === "0000") return; // Probably a webhook
     if (msg.author.id === client.user.id) return;
@@ -54,8 +58,20 @@ client.on("messageCreate", async (msg) => {
     }
 });
 
-process.on("unhandledRejection", (reason) => {
-    logger.error("UNHANDLED_REJECTION", reason as any);
+client.on("disconnect", () => {
+    logger.warn("DISCONNECT", "Client disconnected");
+});
+
+client.on("error", (e: any) => {
+    logger.error("DISCORD_ERROR", e);
+});
+
+process.on("unhandledRejection", (reason: any) => {
+    logger.error("UNHANDLED_REJECTION", reason);
+});
+
+process.on("uncaughtException", (e: any) => {
+    logger.error("UNCAUGHT_EXCEPTION", e);
 });
 
 process.on("SIGINT", () => {

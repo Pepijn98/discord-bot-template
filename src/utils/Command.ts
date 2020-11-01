@@ -1,5 +1,6 @@
 import CommandContext from "~/types/CommandContext";
 import { CommandOptions } from "~/types/Options";
+import { Permission } from "./Utils";
 import { Message, Member, GuildChannel } from "eris";
 
 export default abstract class Command {
@@ -16,8 +17,8 @@ export default abstract class Command {
     guildOnly: boolean;
     ownerOnly: boolean;
     requiredArgs: number;
-    userPermissions: string[];
-    botPermissions: string[];
+    userPermissions: Permission[];
+    botPermissions: Permission[];
 
     constructor(options: CommandOptions) {
         this._key = options.name;

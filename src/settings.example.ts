@@ -1,6 +1,6 @@
-import { ISettings } from "./src/interfaces/ISettings";
+import Settings from "./types/Settings";
 
-const settings: ISettings = {
+const settings: Settings = {
     token: "<token>",
     owner: "<owner-id>",
     prefix: "!"

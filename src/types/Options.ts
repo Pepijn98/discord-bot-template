@@ -1,6 +1,7 @@
 import Client from "~/utils/Client";
 import Logger from "~/utils/Logger";
 import Collection from "@kurozero/collection";
+import { Permission } from "~/utils/Utils";
 import { User } from "eris";
 
 export interface CommandHandlerOptions {
@@ -20,8 +21,8 @@ export interface CommandOptions {
     guildOnly?: boolean | null;
     ownerOnly?: boolean | null;
     requiredArgs?: number | null;
-    userPermissions?: string[] | null;
-    botPermissions?: string[] | null;
+    userPermissions?: Permission[] | null;
+    botPermissions?: Permission[] | null;
 }
 
 export interface CommandStats {

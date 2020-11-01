@@ -1,4 +1,40 @@
-import { Channel, GuildChannel, PrivateChannel } from "eris";
+import { Channel, GuildChannel, PrivateChannel, Constants } from "eris";
+
+export type Permission =
+    | "createInstantInvite"
+    | "kickMembers"
+    | "banMembers"
+    | "administrator"
+    | "manageChannels"
+    | "manageGuild"
+    | "addReactions"
+    | "viewAuditLogs"
+    | "voicePrioritySpeaker"
+    | "stream"
+    | "readMessages"
+    | "sendMessages"
+    | "sendTTSMessages"
+    | "manageMessages"
+    | "embedLinks"
+    | "attachFiles"
+    | "readMessageHistory"
+    | "mentionEveryone"
+    | "externalEmojis"
+    | "viewGuildInsights"
+    | "voiceConnect"
+    | "voiceSpeak"
+    | "voiceMuteMembers"
+    | "voiceDeafenMembers"
+    | "voiceMoveMembers"
+    | "voiceUseVAD"
+    | "changeNickname"
+    | "manageNicknames"
+    | "manageRoles"
+    | "manageWebhooks"
+    | "manageEmojis";
+
+const { Intents } = Constants;
+export const intents = Intents.guilds | Intents.guildMembers | Intents.guildBans | Intents.guildEmojis | Intents.guildMembers | Intents.guildMessages | Intents.guildMessageReactions | Intents.directMessages;
 
 /** Wait x amount of milliseconds */
 export const sleep = (ms: number): Promise<unknown> => new Promise((r) => setTimeout(r, ms));
