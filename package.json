@@ -4,8 +4,7 @@
     "description": "Discord Bot Template",
     "engines": {
         "node": ">=14",
-        "npm": ">=6.14.7",
-        "yarn": ">=1.22.4 <2.0.0"
+        "yarn": ">=1.20.0 <2.0.0"
     },
     "homepage": "https://github.com/Pepijn98/discord-bot-template#readme",
     "repository": {
@@ -22,15 +21,15 @@
     },
     "scripts": {
         "deploy": "pm2 start ecosystem.config.js --env production",
-        "start": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register src/index.ts",
+        "start": "cross-env NODE_ENV=production node ./build/src/index.js",
         "dev": "cross-env NODE_ENV=development nodemon --watch '**/*.ts' --ignore '**/*.spec.ts' --exec 'ts-node' -r tsconfig-paths/register src/index.ts",
         "debug": "cross-env DEBUG=true NODE_ENV=development ts-node -r tsconfig-paths/register src/index.ts",
-        "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Use yarn for installing: https://yarnpkg.com/en/docs/install')\"",
+        "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Use yarn for installing: https://classic.yarnpkg.com/en/docs/install')\"",
+        "prestart": "yarn build",
         "pretest": "yarn pretty",
-        "prebuild": "rm -rf dist",
+        "prebuild": "rm -rf build",
         "build": "tsc",
         "test": "tsc --noEmit",
-        "deps": "depcheck",
         "format": "prettier --write \"src/**/*.{ts,js}\" \"./*.{ts,js}\"",
         "lint": "eslint \"src/**/*.{ts,js}\" \"./*.{ts,js}\" --fix",
         "pretty": "yarn format && yarn lint",
@@ -40,7 +39,7 @@
         "@kurozero/collection": "^0.5.1",
         "bufferutil": "^4.0.2",
         "chalk": "^4.1.0",
-        "eris": "^0.13.3",
+        "eris": "^0.14.0",
         "erlpack": "abalabahaha/erlpack",
         "moment": "^2.29.1",
         "os-utils": "oscmejia/os-utils",
@@ -49,8 +48,8 @@
     },
     "devDependencies": {
         "@types/node": "^14.14.6",
-        "@typescript-eslint/eslint-plugin": "^4.6.0",
-        "@typescript-eslint/parser": "^4.6.0",
+        "@typescript-eslint/eslint-plugin": "^4.6.1",
+        "@typescript-eslint/parser": "^4.6.1",
         "cross-env": "^7.0.2",
         "eslint": "^7.12.1",
         "eslint-config-prettier": "^6.15.0",

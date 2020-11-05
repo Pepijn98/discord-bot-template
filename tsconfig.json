@@ -6,8 +6,10 @@
         "noImplicitReturns": false,
         "esModuleInterop": true,
         "resolveJsonModule": true,
+        "declaration": false,
+        "sourceMap": false,
         "rootDir": ".",
-        "outDir": "dist",
+        "outDir": "build",
         "typeRoots": [
             "./node_modules/@types",
             "./@types"

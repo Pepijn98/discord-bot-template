@@ -2,8 +2,8 @@ module.exports = {
     apps: [
         {
             name: "Discord Bot",
-            script: "ts-node",
-            args: "-r tsconfig-paths/register ./src/index.ts",
+            script: "node",
+            args: "./build/src/index.js",
             instances: 1,
             autorestart: true,
             watch: false,
